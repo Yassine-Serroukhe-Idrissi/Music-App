@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{% block content %}
+<head>
+    <style>
+    *{
+        padding: 0;
+        margin: 0;
+        font-family: 'poppins', sans-serif;
+    }
+    .hero{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10%;
+    }
+    .music img{
+        width: 200px;
+    }
+    .music{
+        width: 50%;
+        padding: 30px;
+        box-sizing: border-box;
+        background: linear-gradient(to left, #3a8fd9 , #fc346f);
+        display: flex
+    }
+    .info{
+        color: white;
+        margin-left: 30px;
+        flex: 1;
+    }
+    .info p{
+        font-size: 20px;
+        margin: 10px 0 60px;
+    }
+    .controls{
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    .controls img{
+        width: 20px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+    </style>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+</head>
+<body>
+    <div class="hero">
+        <div class="music">
+        <img src="{{ song.music_image.url }}">
+        <div class="info">
+            <h1>{{ song.music_titre }}</h1>
+            <p>{{ song.music_aut }}</p>
+            <div id="waveform"></div>
+            <div class="controls">
+                <img src="../../static/media/play.png" id="playBtn">
+                <img src="../../static/media/stop.png" id="stopBtn">
+                <img src="../../static/media/volume.png" id="volumeBtn">
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        var playBtn = document.getElementById("playBtn");
+        var stopBtn = document.getElementById("stopBtn");
+        var volumeBtn = document.getElementById("volumeBtn");
+
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: 'white',
+            progressColor: '#6610f2',
+            barWidth: 4,
+            height: 90,
+            responsive: true,
+            hideScrollbar: true,
+            barRadius: 4,
+        });
+        wavesurfer.load("{{ song.music_audio.url }}");
+        playBtn.onclick = function(){
+            wavesurfer.playPause();
+            if(playBtn.src.includes("play.png")){
+            playBtn.src = "../../static/media/pause.png";
+                   }else{
+                   playBtn.src= "../../static/media/play.png" ;
+                    }
+        }
+        stopBtn.onclick = function(){
+            wavesurfer.stop();
+            playBtn.src="../../static/media/play.png";
+        }
+        volumeBtn.onclick=function(){
+            wavesurfer.toggleMute();
+            if(volumeBtn.src.includes("volume.png")){
+                volumeBtn.src="../../static/media/mute.png";
+            }
+            else{
+                volumeBtn.src="../../../static/media/volume.png";
+            }
+        }
+    
+    </script>
+</body>
+
+{% endblock content%}

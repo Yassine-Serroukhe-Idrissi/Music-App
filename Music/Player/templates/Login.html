@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="container mt-5" class="form-group">
+    <table borser="0" width = "400" height = 400 align="center">
+        <tr>
+            <td style = "padding-left:25px;">
+                <form method="post" class="post-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{form.as_p}}
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a class="btn btn-primary" href="{% url 'Register' %}" role="button">Register</a>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

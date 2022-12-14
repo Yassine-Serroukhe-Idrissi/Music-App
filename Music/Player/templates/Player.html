@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block title %}PLAYER{% endblock %}
+{% block content %}
+<div class="container">
+        <div class="row" style="margin: 3%;">
+            {% for item in song %}
+            <div class="card" style="   width: 17.8rem; margin:3%">
+                <img src="{{ item.music_image.url }}" class="card-img-top"  height="60%" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ item.music_titre}}</h5>
+                    <center><a href="{% url 'MusicPlayer' item.id %}" class="btn btn-primary">{{ item.music_aut }}</a></center>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}
